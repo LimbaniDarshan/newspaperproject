@@ -37,12 +37,22 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    
     'users',
     'pages',
     "crispy_forms",
     "crispy_bootstrap4",
     'articles',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+    'rest_framework.permissions.AllowAny',
+]
+}
+
+
 TIME_ZONE = 'America/New_York'
 AUTH_USER_MODEL = 'users.CustomUser'
 MIDDLEWARE = [
