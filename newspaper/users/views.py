@@ -1,7 +1,7 @@
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from .forms import CustomUserCreationForm
-from rest_framework import generics
+from rest_framework import generics,permissions
 from .models import CustomUser
 from .serializers import CustomUserSerializer
 
@@ -13,7 +13,9 @@ class SignUpView(CreateView):
 class CustomUserListCreate(generics.ListCreateAPIView):
     queryset=CustomUser.objects.all()
     serializer_class=CustomUserSerializer
+    permission_classes=(permissions.IsAuthenticatedOrReadOnly,)
     
 class CustomerUserRetriveUpdateDestory(generics.RetrieveUpdateDestroyAPIView):
     queryset=CustomUser.objects.all()
     serializer_class=CustomUserSerializer
+    permission_classes=(permissions.IsAuthenticatedOrReadOnly,)

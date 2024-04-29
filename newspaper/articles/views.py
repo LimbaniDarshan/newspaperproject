@@ -1,7 +1,7 @@
 from django.views.generic import *
 from django.views.generic.edit import UpdateView, DeleteView 
 from django.contrib.auth.mixins import LoginRequiredMixin ,UserPassesTestMixin
-from rest_framework import generics
+from rest_framework import generics,permissions
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from .models import Article
 from django.urls import reverse_lazy 
@@ -55,9 +55,10 @@ class ArticleDeleteView(LoginRequiredMixin, UserPassesTestMixin,DeleteView):
 class ArticleListCreateAPIView(generics.ListCreateAPIView):
     queryset=Article.objects.all()
     serializer_class=ArticleSerializer
-    permission_classes=(IsAuthenticatedOrReadOnly,)
+    permission_classes=(permissions.IsAuthenticatedOrReadOnly,)
     
 class ArticleRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset=Article.objects.all()
     serializer_class=ArticleSerializer
-    permission_classes=(IsAuthenticatedOrReadOnly,)
+    permission_classes=(permissions.IsAuthenticatedOrReadOnly,)
+
