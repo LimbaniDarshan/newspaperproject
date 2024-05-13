@@ -16,10 +16,10 @@ class ArticleTest(TestCase):
 
     def test_article_content(self):
         article = Article.objects.get(id=1)
-        author = article.author.username  # Get username of the author
+        author = article.author.username  
         title = article.title
         body = article.body
-        date = article.date.strftime('%Y-%m-%d %H:%M:%S')  # Convert datetime to string for comparison
+        date = article.date.strftime('%Y-%m-%d %H:%M:%S')  
         
         self.assertEqual(author, 'test1')
         self.assertEqual(title, 'Blog Title')

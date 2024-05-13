@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from django.views.generic.base import TemplateView
+from rest_framework.schemas import get_schema_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,4 +28,6 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
     path('api/v1/dj-rest-auth/', include('dj_rest_auth.urls')),
     path('api/v1/dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
+    path('openapi',get_schema_view(title='newspaper API',description='This is the newspaper API to Develop the skill of web developement'),name='openapi-schema'),
+    
 ]

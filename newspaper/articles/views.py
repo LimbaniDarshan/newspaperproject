@@ -5,7 +5,8 @@ from rest_framework import generics,permissions
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from .models import Article
 from django.urls import reverse_lazy 
-from .serializers import ArticleSerializer
+from .serializers import ArticleSerializer, UserSerializer
+from django.contrib.auth import get_user_model
 
 class ArticleCreateView(LoginRequiredMixin,CreateView):
     model = Article
@@ -13,7 +14,7 @@ class ArticleCreateView(LoginRequiredMixin,CreateView):
     fields = ('title', 'body', 'author',)
     login_url = 'login'
     
-    def form_valid(self, form): # new
+    def form_valid(self, form): 
         form.instance.author = self.request.user
         return super().form_valid(form)
 
@@ -22,7 +23,7 @@ class ArticleListView(LoginRequiredMixin, UserPassesTestMixin,ListView):
     template_name = 'article_list.html'
     login_url = 'login' 
     
-    def test_func(self): # new
+    def test_func(self): 
         return self.request.user.is_authenticated
     
 class ArticleDetailView(LoginRequiredMixin, UserPassesTestMixin,DetailView): 
@@ -61,4 +62,12 @@ class ArticleRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView)
     queryset=Article.objects.all()
     serializer_class=ArticleSerializer
     permission_classes=(permissions.IsAuthenticatedOrReadOnly,)
-
+    
+class UserList(generics.ListCreateAPIView):
+    
+    queryset = get_user_model().objects.all()
+    serializer_class = UserSerializer
+    
+class UserDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = get_user_model().objects.all()
+    serializer_class = UserSerializer
